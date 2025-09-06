@@ -32,6 +32,7 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
 3. Explore how Instruction-Trained Retrievers[^3] increase quality 
 4. Compare with multi-vector[^5][^6] and lexical search[^4]
 5. Formalize task, find cherry picks and assemble dataset
+6. Multiple languages. Query in ru, documents in en VS query and documents in en. Assess ru embedding models.
 
 
 
