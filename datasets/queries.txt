@@ -1,0 +1,10 @@
+get current python interpreter version
+sort list python
+append to list python
+string split python
+open zip file python
+save file from requests get python
+read file python
+os mkdir exist_ok
+os mkdir
+requests get python

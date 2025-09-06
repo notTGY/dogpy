@@ -11,7 +11,7 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
 
 ## How it works?
 
-1. [smolagents](https://huggingface.co/docs/smolagents/en/index) for Agentic RAG + light formatting of answer
+1. [smolagents](https://huggingface.co/docs/smolagents/en/index)[^7] for Agentic RAG + light formatting of answer
 2. Real python docs (retrieved based on your `python3 --version`)
 3. Embed each .txt file in docs with some embedding method, store it somehow (maybe add cache)
 4. Query documentation through agent -> find relevant doc -> repeat -> output concise answer
@@ -109,5 +109,15 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
       eprint={2402.01613},
       archivePrefix={arXiv},
       primaryClass={cs.CL}
+}
+```
+
+[^7]: `smolagents`: a smol library to build great agentic systems.
+```bibtex
+@Misc{smolagents,
+  title =        {`smolagents`: a smol library to build great agentic systems.},
+  author =       {Aymeric Roucher and Albert Villanova del Moral and Thomas Wolf and Leandro von Werra and Erik Kaunismäki},
+  howpublished = {\url{https://github.com/huggingface/smolagents}},
+  year =         {2025}
 }
 ```
