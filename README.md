@@ -27,16 +27,15 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
 # Research goals
 
 0. actually read references 3-6
-1. Compare complexity of task to LIMIT [^1] dataset 
-2. Explore how HyDE [^2] increase quality 
-3. Explore how Instruction-Trained Retrievers [^3] increase quality 
-4. Compare with multi-vector [^5][^6] and lexical search [^4]
+1. Compare complexity of task to LIMIT[^1] dataset 
+2. Explore how HyDE[^2] increase quality 
+3. Explore how Instruction-Trained Retrievers[^3] increase quality 
+4. Compare with multi-vector[^5][^6] and lexical search[^4]
 5. Formalize task, find cherry picks and assemble dataset
 
 
 
-
-[^1] On the Theoretical Limitations of Embedding-Based Retrieval
+[^1]: On the Theoretical Limitations of Embedding-Based Retrieval
 ```bibtex
 @misc{weller2025theoreticallimitationsembeddingbasedretrieval,
       title={On the Theoretical Limitations of Embedding-Based Retrieval}, 
@@ -49,7 +48,7 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
 }
 ```
 
-[^2] Precise Zero-Shot Dense Retrieval without Relevance Labels
+[^2]: Precise Zero-Shot Dense Retrieval without Relevance Labels
 ```bibtex
 @misc{gao2022precisezeroshotdenseretrieval,
       title={Precise Zero-Shot Dense Retrieval without Relevance Labels}, 
@@ -62,7 +61,7 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
 }
 ```
 
-[^3] Promptriever: Instruction-Trained Retrievers Can Be Prompted Like Language Models
+[^3]: Promptriever: Instruction-Trained Retrievers Can Be Prompted Like Language Models
 ```bibtex
 @misc{weller2024promptrieverinstructiontrainedretrieversprompted,
       title={Promptriever: Instruction-Trained Retrievers Can Be Prompted Like Language Models}, 
@@ -75,7 +74,7 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
 }
 ```
 
-[^4] Okapi at TREC-3
+[^4]: Okapi at TREC-3
 ```bibtex
 @article{robertson1995okapi,
   title={{Okapi at TREC-3}},
@@ -86,7 +85,7 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
 }
 ```
 
-[^5] Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference
+[^5]: Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference
 ```bibtex
 @misc{modernbert,
       title={Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference}, 
@@ -100,7 +99,7 @@ Python documentation helper (e.g. "how do I split a string by spaces?")
 
 ```
 
-[^6] Nomic Embed: Training a Reproducible Long Context Text Embedder
+[^6]: Nomic Embed: Training a Reproducible Long Context Text Embedder
 ```bibtex
 @misc{nussbaum2024nomic,
       title={Nomic Embed: Training a Reproducible Long Context Text Embedder}, 
