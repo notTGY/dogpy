@@ -3,11 +3,11 @@ import requests
 import os
 import zipfile
 
-DEFAULT_VERSION = "3.11.2"
+DEFAULT_VERSION = platform.python_version()
 cache_path = ".cache"
 
 
-def download(version=DEFAULT_VERSION):
+def download_python_docs(version=DEFAULT_VERSION):
     output_path = f"{cache_path}/docs-{version}.zip"
     os.makedirs(cache_path, exist_ok=True)
     try:
@@ -44,6 +44,5 @@ def list_docs(version=DEFAULT_VERSION):
 
 
 if __name__ == "__main__":
-    version = platform.python_version()
-    download(version)
-    list_docs(version)
+    download_python_docs()
+    list_docs()

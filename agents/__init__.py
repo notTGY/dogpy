@@ -1,0 +1,36 @@
+import os
+from dotenv import load_dotenv
+from smolagents import LogLevel, OpenAIServerModel, ToolCallingAgent, tool
+
+
+@tool
+def query_python_docs(query: str) -> str:
+    """
+    Returns relevant article from python documentation.
+
+    Args:
+        query: what to search for in the documentation.
+    """
+    raise NotImplementedError("Documentation search is not yet supported")
+
+
+load_dotenv()
+
+debug = True if os.getenv("DEBUG") else False
+api_key = os.getenv("OPENROUTER_API_KEY")
+
+model_id = "meta-llama/llama-3.1-8b-instruct" if api_key else "llama3.1:8b"
+api_base = "https://openrouter.ai/api/v1" if api_key else "http://localhost:11434/v1"
+
+model = OpenAIServerModel(
+    model_id=model_id,
+    api_base=api_base,
+    api_key=api_key,
+)
+agent = ToolCallingAgent(
+    tools=[query_python_docs],
+    model=model,
+    stream_outputs=debug,
+    verbosity_level=LogLevel.INFO if debug else LogLevel.ERROR,
+    instructions="Answer question. Always include example with test data in answer",
+)

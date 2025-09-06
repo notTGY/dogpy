@@ -8,3 +8,9 @@ read file python
 os mkdir exist_ok
 os mkdir
 requests get python
+read second line of file python
+docstring python
+process exit in python
+raise not implemented error python
+get environment variable python
+pass arguments to python script

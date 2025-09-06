@@ -5,6 +5,8 @@
 3. install deps: `python3 -m pip install -r requirements.txt`
 4. run `python3 __main__.py` or `./__main__.py`
 
+non-interactive usage: `./__main__.py --prompt "how to create a list"`
+
 # What is it?
 
 Python documentation helper (e.g. "how do I split a string by spaces?")
