@@ -2,3 +2,5 @@ requests
 black
 smolagents[openai]
 python-dotenv
+langchain_community
+rank_bm25

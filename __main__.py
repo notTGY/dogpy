@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-from download_python_docs import download_python_docs
 from dotenv import load_dotenv
 import os
 import argparse
-from agents import agent
+
+from agents import create_agent
+from rag import prepare_python_docs, RetrieverTool
 
 
 def main():
@@ -15,7 +16,8 @@ def main():
     )
     args = parser.parse_args()
 
-    download_python_docs()
+    retriever_tool = RetrieverTool(prepare_python_docs())
+    agent = create_agent(tools=[retriever_tool])
 
     prompt = args.prompt or input("> ")
     result = agent.run(prompt)

@@ -6,7 +6,6 @@ import zipfile
 DEFAULT_VERSION = platform.python_version()
 cache_path = ".cache"
 
-
 def download_python_docs(version=DEFAULT_VERSION):
     output_path = f"{cache_path}/docs-{version}.zip"
     os.makedirs(cache_path, exist_ok=True)
@@ -22,6 +21,7 @@ def download_python_docs(version=DEFAULT_VERSION):
             for chunk in response.iter_content(chunk_size=8192):
                 if chunk:  # Filter out keep-alive new chunks
                     f.write(chunk)
+    return output_path
 
 
 def get_top_level_dirs(paths):
@@ -34,15 +34,28 @@ def get_top_level_dirs(paths):
     return dirs
 
 
-def list_docs(version=DEFAULT_VERSION):
-    output_path = f"{cache_path}/docs-{version}.zip"
-    with zipfile.ZipFile(output_path, "r") as zip_ref:
+def list_docs(file_path):
+    with zipfile.ZipFile(file_path, "r") as zip_ref:
         all_files = zip_ref.namelist()
         for dir in get_top_level_dirs(all_files):
             print(f"- {dir}")
     pass
 
+def get_files_from_dir(dirname, file_path):
+    with zipfile.ZipFile(file_path, "r") as zip_ref:
+        all_files = zip_ref.namelist()
+        files = {}
+        for path in all_files:
+            top_level_dir = path.split("/", 2)[1]
+            if top_level_dir == dirname:
+                with zip_ref.open(path) as file:
+                    files[path] = str(file.read())
+        return files
 
-if __name__ == "__main__":
-    download_python_docs()
-    list_docs()
+def prepare_python_docs():
+    docs_path = download_python_docs()
+    files = get_files_from_dir("library", docs_path)
+    texts = []
+    for fname in files:
+        texts.append(files[fname])
+    return texts
