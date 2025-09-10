@@ -7,8 +7,10 @@ load_dotenv()
 debug = True if os.getenv("DEBUG") else False
 api_key = os.getenv("OPENROUTER_API_KEY")
 
-model_id = "meta-llama/llama-3.1-8b-instruct" if api_key else "llama3.1:8b"
+model_id = "meta-llama/llama-3.1-8b-instruct" if api_key else "smollm2:latest"
 api_base = "https://openrouter.ai/api/v1" if api_key else "http://localhost:11434/v1"
+
+api_key = api_key or "ollama"
 
 instructions = """Answer question. Always include example with test data in answer.
 Always query documentation for relevant information, base your answer on the retrieved documents."""
