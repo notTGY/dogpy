@@ -16,3 +16,7 @@ get environment variable python
 pass arguments to python script
 python dict
 python substring
+how to measure time difference in python
+python __all__
+how to format float in template string
+is time.time() in seconds?

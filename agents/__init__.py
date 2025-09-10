@@ -22,8 +22,9 @@ class RetrieverTool(Tool):
 
         return self.retriever.query(query)
 
-instructions = """Answer question. Always include example with test data in answer.
-Always query documentation for relevant information, base your answer on the retrieved documents."""
+instructions = """Answer question.
+Always query documentation for relevant information, base your answer on the retrieved documents.
+Always include example with test data in answer."""
 
 def create_agent(model, api_key, api_base, retriever, debug=False):
     _model = OpenAIServerModel(
