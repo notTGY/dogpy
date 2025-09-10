@@ -1,27 +1,50 @@
+from langchain.docstore.document import Document
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.retrievers import BM25Retriever
-from smolagents import Tool
+from langchain_ollama import OllamaEmbeddings
+from langchain_core.vectorstores import InMemoryVectorStore
 
-class RetrieverTool(Tool):
-    name = "retriever"
-    description = "Uses semantic search to retrieve the parts of python documentation that could be most relevant to answer your query."
-    inputs = {
-        "query": {
-            "type": "string",
-            "description": "The query to perform. This should be semantically close to your target documents. Use the affirmative form rather than a question.",
-        }
-    }
-    output_type = "string"
+cache_path = ".cache"
 
-    def __init__(self, docs, **kwargs):
-        super().__init__(**kwargs)
-        self.retriever = BM25Retriever.from_texts(
-            docs, k=1
+class Retriever:
+    def __init__(self, raw_docs, model="bm25"):
+        source_docs = [Document(page_content=content) for content in raw_docs]
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=8192,
+            chunk_overlap=50,
+            add_start_index=True,
+            strip_whitespace=True,
+            separators=["\n\n", "\n", ".", " ", ""],
         )
+        docs_processed = text_splitter.split_documents(source_docs)
 
-    def forward(self, query: str) -> str:
-        """Execute the retrieval based on the provided query."""
-        assert isinstance(query, str), "Your search query must be a string"
 
+        if model == "bm25":
+            self.retriever = BM25Retriever.from_documents(
+                docs_processed, k=2
+            )
+        else:
+            embeddings = OllamaEmbeddings(model=model)
+            output_path = f"{cache_path}/vs-{model}"
+            try:
+                open(output_path, "r")
+                vectorstore = InMemoryVectorStore.load(output_path, embeddings)
+            except FileNotFoundError:
+                print(f"About to embed {len(docs_processed)} documents")
+                vectorstore = InMemoryVectorStore.from_documents(
+                    docs_processed,
+                    embedding=embeddings,
+                )
+                vectorstore.dump(output_path)
+
+            self.retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
+
+    def query(self, query: str) -> str:
         docs = self.retriever.invoke(query)
 
-        return docs[0]
+        return "\nRetrieved documents:\n" + "".join(
+            [
+                f"\n\n===== Document {str(i)} =====\n" + doc.page_content
+                for i, doc in enumerate(docs)
+            ]
+        )

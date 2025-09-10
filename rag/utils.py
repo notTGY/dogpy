@@ -3,6 +3,7 @@ import requests
 import os
 import zipfile
 
+
 DEFAULT_VERSION = platform.python_version()
 cache_path = ".cache"
 
@@ -54,7 +55,7 @@ def get_files_from_dir(dirname, file_path):
 
 def prepare_python_docs():
     docs_path = download_python_docs()
-    files = get_files_from_dir("library", docs_path)
+    files = get_files_from_dir("tutorial", docs_path)
     texts = []
     for fname in files:
         texts.append(files[fname])

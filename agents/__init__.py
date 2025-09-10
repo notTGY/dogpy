@@ -1,29 +1,42 @@
-import os
-from dotenv import load_dotenv
-from smolagents import LogLevel, OpenAIServerModel, ToolCallingAgent
+from smolagents import LogLevel, OpenAIServerModel, ToolCallingAgent, Tool
 
-load_dotenv()
+class RetrieverTool(Tool):
+    name = "retriever"
+    description = "Uses semantic search to retrieve the parts of python documentation that could be most relevant to answer your query."
+    inputs = {
+        "query": {
+            "type": "string",
+            "description": "The query to perform. This should be semantically close to your target documents. Use the affirmative form rather than a question.",
+        }
+    }
+    output_type = "string"
 
-debug = True if os.getenv("DEBUG") else False
-api_key = os.getenv("OPENROUTER_API_KEY")
+    def __init__(self, retriever, **kwargs):
+        super().__init__(**kwargs)
 
-model_id = "meta-llama/llama-3.1-8b-instruct" if api_key else "smollm2:latest"
-api_base = "https://openrouter.ai/api/v1" if api_key else "http://localhost:11434/v1"
+        self.retriever = retriever
 
-api_key = api_key or "ollama"
+    def forward(self, query: str) -> str:
+        """Execute the retrieval based on the provided query."""
+        assert isinstance(query, str), "Your search query must be a string"
+
+        return self.retriever.query(query)
 
 instructions = """Answer question. Always include example with test data in answer.
 Always query documentation for relevant information, base your answer on the retrieved documents."""
 
-def create_agent(tools):
-    model = OpenAIServerModel(
-        model_id=model_id,
+def create_agent(model, api_key, api_base, retriever, debug=False):
+    _model = OpenAIServerModel(
+        model_id=model,
         api_base=api_base,
         api_key=api_key,
     )
+    tools = [
+        RetrieverTool(retriever)
+    ]
     agent = ToolCallingAgent(
         tools=tools,
-        model=model,
+        model=_model,
         stream_outputs=debug,
         verbosity_level=LogLevel.INFO if debug else LogLevel.ERROR,
         instructions=instructions,
